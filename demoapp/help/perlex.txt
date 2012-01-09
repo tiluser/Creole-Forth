@@ -1,0 +1,43 @@
+Example 1. Interfacing Creole with a Perl script
+
+To do this example, Perl for Windows needs to be installed on
+your system. Activestate Perl is on the CD that came with this
+demo in the \install subdirectory and should be installed before
+proceeding further.
+
+Step 1 : High-level definition.
+
+Type the following into the input field of the demo application,
+and then click on the submit button.
+
+: PICKSCRIPT DLG PSCRIPT ;
+
+DLG creates a dialog box which allows the user to pick a file
+and then leaves the file name on the data stack. PSCRIPT is a
+defining word that takes a filename as its argument. The filename
+must have a .pl extension. Its runtime action is to execute a 
+Perl script.
+
+Step 2 : Creating the script alias using a dialog box.
+
+Once this is done, type in the following and submit again :
+
+PICKSCRIPT RTEST
+
+This action will produce the dialog box. Please select the 
+single Perl file in the subdirectory rtest.pl. Once this is
+done, the filename will be compiled into the word definition
+and it can be executed simply by typing its alias RTEST.
+
+Step 3 : Executing the script with its arguments on the stack.
+
+RTEST takes two arguments, a seed number and the number of
+random numbers to generate. 
+
+You can type 1234 100 RTEST or place their arguments directly
+on the stack if you like (remember to put 1234 underneath 100
+if you do so). Once RTEST is executed with its two arguments,
+a dialog box will pop up informing you that the script has been
+executed. The series of random numbers will be returned to the
+data stack.
+

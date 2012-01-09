@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<TITLE>Creole Demo with Indy Web Server component</TITLE>
+</HEAD>
+<BODY>
+<CENTER>
+<H2>Welcome to the Creole Web Server Test Page</H2>
+<FORM METHOD=GET ACTION="http://localhost:3535">
+</CENTER>
+<BR><BR>
+<P>This demo uses the TIdHTTPServer component to submit
+commands to the Creole scripting engine via the GET
+method.
+</P>
+<P>
+Example 1. Click on the button to get the current time.
+<INPUT TYPE=submit NAME=Time VALUE="Time">
+</P><HR>
+<P>Example 2. Please enter a math problem to be calculated (RPN
+syntax please).
+<INPUT TYPE=TEXT NAME=mathproblem SIZE=40>
+<INPUT TYPE=submit NAME=submit VALUE="Submit"> 
+<INPUT TYPE=reset NAME=reset1 VALUE="Reset">
+</P>
+<HR>
+<P>
+Example 3. View all the words defined in Creole, their
+vocabulary, and their associated help entry.
+<INPUT TYPE=submit NAME=Help VALUE="Help">
+<INPUT TYPE=reset NAME=reset2 VALUE="Reset">
+</P>
+<HR>
+</FORM>
+</BODY>
+</HTML>
+
+
+                                 

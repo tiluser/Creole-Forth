@@ -1,0 +1,24 @@
+To execute the web server example, do the following steps :
+
+1. Switch the web server on. This is done by going to the
+   two radio buttons where it says 'Toggle Web Server' and
+   clicking the On button.
+
+2. Go to your web browser and type the following on the
+   URL line : http://localhost:3535. This will bring up the 
+   home page of the web server. It may take a few seconds
+   to come up. 
+
+3. There are three examples on the home page :
+   A. Generation of a date/time stamp.
+   B. An RPN calculator.
+   C. Generation of a page which shows the contents of the Creole dictionary. 
+      
+4. Click on each example in turn. In each case, you will see on the bottom
+   a button which will bring you back to the home page when clicked.
+
+
+5. The web pages are generated dynamically by Creole dictionary definitions. 
+   A partial exception to this is the home page, which is produced by a
+   word that loads a real file as a template.
+  

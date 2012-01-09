@@ -1,0 +1,52 @@
+There are two parts to this example. The first one
+calls the external function EnumerateWindows, and
+the second one gives a simple application of the
+SendKeys function in the dll library file SK8765.DLL.
+
+To see the first example, simply click the Enumerate
+Windows button. The Memo field above will be populated
+by all the currently active windows running along with
+their associated file handles.
+
+For the second example, type in some text where it 
+says 'Text to send' and then hit the 'Send Text to Notepad'
+button. Notepad will be executed and as the window currently
+in the foreground, it will receive the text. 
+
+While these are both limited examples, they show the
+possibilities of interfacing Creole to low-level external
+libraries that are often written in another language 
+(such as C). All that needs to be done is to have a
+wrapper procedure written around them that has the
+Creole primitive parameter list and reference them using
+the BuildPrimitive method. These parameters are as follows :
+
+Owner : TCOmponent. Refers to the container form that
+the Creole component attaches itself to.
+
+EI : TExtInterface. Interfaces with stacks, input, PAD,
+and output and has fields and routines associated with
+their manipulation.
+
+DI : TDictInterface. Dictionary interface and associated
+routines.
+
+CI : Control interface. Stores configuration and startup
+information for Creole (not currently used).
+
+CWI : TCreoleWord. A descendant of TObject. Below are its most
+important fields.
+
+1. Namefield.
+2. IndexField. Index in dictionary (or address)
+3. CodeField. procedural type or pointer to a primitive procedure
+   which has the Owner,EI,DI,CI,CWI parameter list.
+4. Parameter Field. An integer array holding indexes to Creole words
+   in the dictionary. High level definitions are essentially assemblages
+   of indexes to words in the dictionary that reside in their parameter field.
+5. Data field. Stores data for the word.
+6. TypeField. string showing type of word; ie primitive, colon, defining.
+7. Vocabulary. Vocabulary word was defined in. 
+8. RedefinedField. Address of word with the same name that was defined before it
+   (if any).
+9. HelpField. Field for storing online help.
