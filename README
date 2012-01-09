@@ -1,27 +1,28 @@
-Creole Forth - a scripting language in the form of a Delphi/Lazarus
-component. 
+<p>Creole Forth - a scripting language in the form of a Delphi/Lazarus
+component. </p>
 
-Why I wrote it
+<p>Why I wrote it</p>
 
-Forth is a simple stack based language commonly used in resource-constrained 
+<p>Forth is a simple stack based language commonly used in resource-constrained 
 systems. I don't normally work in those environments. Developing my own version 
-of Forth gave me the opportunity to use it on my own projects. 
+of Forth gave me the opportunity to use it on my own projects. </p>
 
-Why I'm proud of it
+<p>Why I'm proud of it</p>
 
-My scripting language takes many of the best features of Forth and adds it own
+<p>My scripting language takes many of the best features of Forth and adds it own
 unusual set of features. It is nearly trivial to add to any Delphi or Lazarus
 application - simply drop the TCreole component on a form, set a few properties
-and call an initialization method, and then submit commands to it. 
+and call an initialization method, and then submit commands to it. </p>
 
-As an extensible embedded language it has some similarities to Tcl. However, it
+<p>As an extensible embedded language it has some similarities to Tcl. However, it
 is much simpler in terms of both code and in the ease a developer can add extensions
-to the language. 
+to the language. </p>
 
-Creole Forth's features include strings as first-class objects, simple codebase 
+<p>Creole Forth's features include strings as first-class objects, simple codebase 
 (about 3000 lines), and easy extensibility. I am proud to say I have used it 
-for many projects both for my personal use and  for clients. 
+for many projects both for my personal use and  for clients. </p>
 
-Subfolders:
+<p>Subfolders:
 sources - sources used to build TCreole sources
-demoapp - executable demo of Creole Forth functionality
+demoapp - executable demo of Creole Forth functionality</p>
+
