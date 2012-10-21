@@ -27,12 +27,14 @@ interpreted as representing official policies, either expressed or implied.
 
 UNIT Compiler2;
 
+{$MODE Delphi}
+
 // {$MODE Delphi}
 
 INTERFACE
 USES
   Dialogs, SysUtils, Math, classes, stdctrls, TILable, Coreprims,
-  Compiler, Interpreter, CrSysUtils;
+  Compiler1, Interpreter, CrSysUtils;
 
 PROCEDURE CompileList(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);
 PROCEDURE CompileList2(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);

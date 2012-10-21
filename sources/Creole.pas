@@ -22,18 +22,16 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The views and conclusions contained in the software and documentation are those of the author and should not be 
 interpreted as representing official policies, either expressed or implied.
 *)
-// Remove // below to compile in Lazarus.
-//   {$mode Delphi}
 unit Creole;
 
-// {$MODE Delphi}
+{$MODE Delphi}
 
 interface
 
 uses
 //  LCLIntf,
   Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  Coreprims, TILable, Interpreter, Compiler, Compiler2, CrSysUtils;
+  Coreprims, TILable, Interpreter, Compiler1, Compiler2, CrSysUtils;
 
 type
   TDictChgEvent = PROCEDURE(Sender : TObject) OF OBJECT;

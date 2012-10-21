@@ -26,7 +26,7 @@ interpreted as representing official policies, either expressed or implied.
 // Application-specific routines
 unit crsysutils;
 
-//{$MODE Delphi}
+{$MODE Delphi}
 
 interface
 USES

@@ -1,10 +1,12 @@
 // Personally developed string-handling routines
 unit JMOStr;
 
+{$MODE Delphi}
+
 interface
 
 USES
-  FileCtrl, SysUtils, Dialogs, LMString, Math;
+  FileCtrl, SysUtils, Dialogs, Math;
 
 PROCEDURE StrLeftTrim(VAR S : STRING; Delimiter : STRING);
 PROCEDURE StrRightTrim(VAR S : STRING; Delimiter : STRING);
@@ -261,14 +263,14 @@ BEGIN
     IF NOT DirectoryExists(CatDir) THEN MkDirs := CreateDir(CatDir);
   END;
 END;
-
 FUNCTION RemovePath(S :STRING) : STRING;
 BEGIN
+  (*
   S := StrReverse(S);
   S := ParseString(S,1,'\');
   RemovePath := StrReverse(S);
+  *)
 END;
-
 PROCEDURE StrPadTo(VAR Replacement: STRING; Len : word);
 VAR
   Blanks : STRING;

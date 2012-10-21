@@ -25,6 +25,8 @@ interpreted as representing official policies, either expressed or implied.
 
 unit coreprims;
 
+{$MODE Delphi}
+
 //{$MODE Delphi}
 
 interface

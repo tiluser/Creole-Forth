@@ -27,7 +27,7 @@ interpreted as representing official policies, either expressed or implied.
 // and pre and post filtering routines.
 unit interpreter;
 
-//{$MODE Delphi}
+{$MODE Delphi}
 
 interface
 USES
