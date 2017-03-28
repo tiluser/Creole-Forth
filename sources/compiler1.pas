@@ -1,5 +1,5 @@
 (*
-Copyright 2003 Joseph M. O'Connor. http://www.creoleforth.org
+Copyright 2003 Joseph M. O'Connor. https://github.com/tiluser
 
 All rights reserved. (Derived from the FreeBSD copyright at http://www.freebsd.org/copyright/freebsd-license.html).
 
@@ -44,7 +44,7 @@ USES
   PROCEDURE DoImmediate(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);
   PROCEDURE CompileVocab(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);
   PROCEDURE DoVocab(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);
-  PROCEDURE DoContextToCurrent(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);
+  PROCEDURE DoCurrentToContext(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);
   PROCEDURE DoForget(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);
 
   // Branching primitives. A separate primitive is needed to handle compile-time
@@ -111,18 +111,17 @@ PROCEDURE DoCreate(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce;
 CI : TCtrlIntfce; CWI : TCreoleWord);
 VAR
   AWord : TCreoleWord;
-  EncryptedName : STRING;
+  FullyQualifiedName : STRING;
 BEGIN
   AWord := TCreoleWord.Create;
   AWord.SetField('NameField',ParseStrWSD(EI.Input.Text,EI.GetOPtr+1));
   AWord.CodeField := DoHere;
   AWord.IndexField := DI.Dictionary.Count;
-  AWord.SetField('Vocabulary',EI.GetField('ContextVocab'));
+  AWord.SetField('Vocabulary',EI.GetField('CurrentVocab'));
   CWI := AWord;
-  EncryptedName := EncryptMsg(AWord.GetField('NameField'),EI.GetField('ContextVocab'),5,1);
-  DI.Dictionary.AddObject(EncryptedName,CWI);
+  FullyQualifiedName := AppendVocab(AWord.GetField('NameField'), EI.GetField('CurrentVocab'),'.');
+  DI.Dictionary.AddObject(FullyQualifiedName,CWI);
   EI.SetOPtr(EI.GetOPtr + 1);
- // EI.Push(EI.DataStack,EI.GetField('IndexField'));
 END;
 
 // Puts address of top (or bottom if you like) of dictionary
@@ -247,13 +246,13 @@ BEGIN
   AWord.SetField('NameField',ParseStrWSD(EI.Input.Text,EI.GetOPtr+1));
   // Find if word has already been defined in current vocabulary. If so,
   // do another encryption so it is not visible anymore
-  LookupIndex := DI.Dictionary.IndexOf(EncryptMsg(AWord.NameField,EI.GetField('ContextVocab'),5,1));
+  LookupIndex := DI.Dictionary.IndexOf(AppendVocab(AWord.NameField,EI.GetField('CurrentVocab'),'.'));
   IF LookupIndex <> -1 THEN
   BEGIN
     BWord := DI.Dictionary.Objects[LookupIndex] AS TCreoleWord;
     OldIndex := LookupIndex;
     DI.Dictionary.Delete(LookupIndex);
-    WordStr := EncryptMsg(DI.Dictionary[I],EI.GetField('ContextVocab'),5,2);
+    WordStr := AppendVocab(DI.Dictionary[I],EI.GetField('CurrentVocab'),'.');
     DI.Dictionary.InsertObject(LookupIndex,WordStr,BWord);
     ShowMessage(AWord.NameField + ' will be redefined');
     BWord := NIL;
@@ -261,10 +260,10 @@ BEGIN
   END;
   AWord.CodeField := DoColon;
   AWord.IndexField := DI.Dictionary.Count;
-  AWord.Vocabulary := EI.GetField('ContextVocab');
+  AWord.Vocabulary := EI.GetField('CurrentVocab');
   AWord.TypeField := 'Colon';
   AWord.SetField('RedefinedField',IntToStr(OldIndex));
-  DI.Dictionary.AddObject(EncryptMsg(AWord.NameField,EI.GetField('ContextVocab'),5,1),AWord);
+  DI.Dictionary.AddObject(AppendVocab(AWord.NameField,EI.GetField('CurrentVocab'),'.'),AWord);
   EI.VocabStack.Insert(0,'IMMEDIATE');
   EI.SetOPtr(EI.GetOPtr + 2);
 
@@ -273,7 +272,7 @@ BEGIN
   WHILE (EI.VocabStack[0] = 'IMMEDIATE') DO
   BEGIN
     CurrentWord := ParseStrWSD(EI.Input.Text,EI.GetOPtr);
-    LookupIndex := DI.Dictionary.IndexOf(EncryptMsg(CurrentWord,EI.VocabStack[0],5,1));
+    LookupIndex := DI.Dictionary.IndexOf(AppendVocab(CurrentWord,EI.VocabStack[0],'.'));
     IF LookupIndex <> -1 THEN
     BEGIN
       CWI := DI.Dictionary.Objects[LookupIndex] AS TCreoleWord;
@@ -284,7 +283,7 @@ BEGIN
 
     FOR I := 1 TO EI.VocabStack.Count-1 DO
     BEGIN
-      LookupIndex := DI.Dictionary.IndexOf(EncryptMsg(CurrentWord,EI.VocabStack[I],5,1));
+      LookupIndex := DI.Dictionary.IndexOf(AppendVocab(CurrentWord,EI.VocabStack[I],'.'));
       IF LookupIndex <> -1 THEN
       BEGIN
         EI.PAD.Append(IntToStr(LookupIndex));
@@ -328,17 +327,17 @@ BEGIN
   AWord := DI.Dictionary.Objects[DI.Dictionary.Count-1] AS TCreoleWord;
   DI.Dictionary.Delete(DI.Dictionary.Count-1);
   AWord.SetField('Vocabulary','IMMEDIATE');
-  DI.Dictionary.AddObject(EncryptMsg(AWord.NameField,'IMMEDIATE',5,1),AWord);
+  DI.Dictionary.AddObject(AppendVocab(AWord.NameField,'IMMEDIATE','.'),AWord);
   AWord := NIL;
   AWord.Free;
 END;
 
-// Sets context vocabulary to current one (At top of vocabulary stack).
-// Context vocabulary sets up where new words are defined, as opposed
+// Sets current vocabulary to context one (At top of vocabulary stack).
+// Current vocabulary sets up where new words are defined, as opposed
 // to the search order.
-PROCEDURE DoContextToCurrent(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);
+PROCEDURE DoCurrentToContext(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);
 BEGIN
-  EI.SetField(EI.GetField('ContextVocab'),EI.VocabStack[0]);
+  EI.SetField(EI.GetField('CurrentVocab'),EI.VocabStack[0]);
 END;
 
 // Compiles a new vocabulary into the dictionary
@@ -349,9 +348,9 @@ BEGIN
   AWord := TCreoleWord.Create;
   AWord.SetField('NameField',ParseStrWSD(EI.Input.Text,EI.GetOPtr+1));
   AWord.CodeField := DoVocab;
-  AWord.Vocabulary := EI.GetField('ContextVocab');
+  AWord.Vocabulary := EI.GetField('CurrentVocab');
   AWord.IndexField := DI.Dictionary.Count;
-  DI.Dictionary.AddObject(EncryptMsg(AWord.NameField,EI.GetField('ContextVocab'),5,1),AWord);
+  DI.Dictionary.AddObject(AppendVocab(AWord.NameField,EI.GetField('CurrentVocab'),'.'),AWord);
   EI.SetOptr(EI.GetOPtr+1);
 END;
 
@@ -377,10 +376,10 @@ BEGIN
   AWord.SetField('NameField',ParseStrWSD(EI.Input.Text,EI.GetOPtr+1));
   AWord.CodeField := DoHash;
   AWord.ObjField := Hash1;
-  AWord.Vocabulary := EI.GetField('ContextVocab');
+  AWord.Vocabulary := EI.GetField('CurrentVocab');
   AWord.IndexField := DI.Dictionary.Count;
   AWord.SetField('TypeField','Hash');
-  DI.Dictionary.AddObject(EncryptMsg(AWord.NameField,EI.GetField('ContextVocab'),5,1),AWord);
+  DI.Dictionary.AddObject(AppendVocab(AWord.NameField,EI.GetField('CurrentVocab'),'.'),AWord);
   EI.SetOptr(EI.GetOPtr+1);
 END;
 
@@ -478,7 +477,7 @@ BEGIN
       IF (FormerIndex > 0) AND (FormerIndex < DictSize) THEN
       BEGIN
         FormerWord := DI.Dictionary.Objects[FormerIndex] AS TCreoleWord;
-        WordStr := EncryptMsg(FormerWord.GetField('NameField'),EI.GetField('ContextVocab'),5,1);
+        WordStr := AppendVocab(FormerWord.GetField('NameField'),EI.GetField('CurrentVocab'),'.');
         DI.Dictionary.Strings[FormerIndex] := WordStr;
       END;
     END;
@@ -760,7 +759,7 @@ BEGIN
   I := 0;
   // Get next word on the input stream.
   RawWord := ParseStrWSD(EI.Input.Text,EI.GetOPtr+1);
-  SeeWord := EncryptMsg(RawWord,EI.VocabStack[I],5,1);
+  SeeWord := AppendVocab(RawWord,EI.VocabStack[I],'.');
   LookupIndex := DI.Dictionary.IndexOf(SeeWord);
   IF (LookupIndex <> -1) THEN
   BEGIN

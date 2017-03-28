@@ -1,5 +1,5 @@
 (*
-Copyright 2003 Joseph M. O'Connor. http://www.creoleforth.org
+Copyright 2003 Joseph M. O'Connor. https://github.com/tiluser
 
 All rights reserved. (Derived from the FreeBSD copyright at http://www.freebsd.org/copyright/freebsd-license.html).
 
@@ -38,9 +38,9 @@ TYPE
   TExtIntfce = CLASS(TObject)
   PRIVATE
     OuterPtr         : integer;   // outer interpreter pointer
-    ContextVocab     : STRING;    // vocabulary where new words are defined
+    CurrentVocab     : STRING;    // vocabulary where new words are defined
     CurrentWord      : STRING;    // Word outer interpreter pointer is at
-    DecryptedWord    : STRING;    // Decrypted version of current word
+    DeNamespacedWord : STRING;    // Current word without attached namespace
     CommandField     : STRING;    // optional command words can pass to one another
     CurrentGlobalDS  : STRING;    // Current global data structure. Default is
                                   // the data stack
@@ -206,18 +206,18 @@ END;
 
 PROCEDURE TExtIntfce.SetField(FieldName, FieldVal : STRING);
 BEGIN
-  IF (FieldName = 'CurrentWord')     THEN CurrentWord     := FieldVal;
-  IF (FieldName = 'DecryptedWord')   THEN DecryptedWord   := FieldVal;
-  IF (FieldName = 'ContextVocab')    THEN ContextVocab    := FieldVal;
-  IF (FieldName = 'CommandField')    THEN CommandField    := FieldVal;
-  IF (FieldName = 'CurrentGlobalDS') THEN CurrentGlobalDS := FieldVal;
+  IF (FieldName = 'CurrentWord')      THEN CurrentWord     := FieldVal;
+  IF (FieldName = 'DeNamespacedWord') THEN DeNamespacedWord := FieldVal;
+  IF (FieldName = 'CurrentVocab')     THEN CurrentVocab    := FieldVal;
+  IF (FieldName = 'CommandField')     THEN CommandField    := FieldVal;
+  IF (FieldName = 'CurrentGlobalDS')  THEN CurrentGlobalDS := FieldVal;
 END;
 
 FUNCTION TExtIntfce.GetField(FieldName : STRING) : STRING;
 BEGIN
   IF (FieldName = 'CurrentWord')     THEN Result := CurrentWord;
-  IF (FieldName = 'DecryptedWord')   THEN Result := DecryptedWord;
-  IF (FieldName = 'ContextVocab')    THEN Result := ContextVocab;
+  IF (FieldName = 'DeNamespacedWord')   THEN Result := DeNamespacedWord;
+  IF (FieldName = 'CurrentVocab')    THEN Result := CurrentVocab;
   IF (FieldName = 'CommandField')    THEN Result := CommandField;
   IF (FieldName = 'CurrentGlobalDS') THEN Result := CurrentGlobalDS;
 END;
@@ -330,7 +330,7 @@ VAR
 BEGIN
   FOR I := 0 TO VS.Count-1 DO
   BEGIN
-    SeeWord := EncryptMsg(RawWord,VS[I],5,1);
+    SeeWord := AppendVocab(RawWord,VS[I],'.');
     TestWord :=  DecryptMsg(SeeWord,VS[I],5,1);
     LookupIndex := Dictionary.IndexOf(SeeWord);
     IF (LookupIndex <> -1) THEN GOTO Exit1;

@@ -1,19 +1,23 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="3">
+  <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="forthscript"/>
+    <Type Value="RunAndDesignTime"/>
+    <AddToProjectUsesSection Value="True"/>
     <CompilerOptions>
-      <Version Value="8"/>
+      <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)\"/>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
-      <Other>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
+      <Parsing>
+        <SyntaxOptions>
+          <UseAnsiStrings Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
     </CompilerOptions>
-    <Files Count="9">
+    <Files Count="7">
       <Item1>
         <Filename Value="tilable.pas"/>
         <UnitName Value="TILable"/>
@@ -43,16 +47,7 @@
         <Filename Value="interpreter.pas"/>
         <UnitName Value="interpreter"/>
       </Item7>
-      <Item8>
-        <Filename Value="jmostr.pas"/>
-        <UnitName Value="JMOStr"/>
-      </Item8>
-      <Item9>
-        <Filename Value="lmstring.pas"/>
-        <UnitName Value="LMString"/>
-      </Item9>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="LCL"/>
@@ -69,5 +64,8 @@
       <Version Value="2"/>
       <IgnoreBinaries Value="False"/>
     </PublishOptions>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
   </Package>
 </CONFIG>

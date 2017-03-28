@@ -1,4 +1,4 @@
-Copyright 2003, 2012 Joseph M. O'Connor.
+Copyright 2003 Joseph M. O'Connor. https://github.com/tiluser 
 
 All rights reserved. (Derived from the FreeBSD copyright at http://www.freebsd.org/copyright/freebsd-license.html).
 
