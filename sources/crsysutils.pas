@@ -36,8 +36,7 @@ USES
   FUNCTION BoolToStr(BoolVal : Boolean) : STRING;
   FUNCTION IsValidInt(S : STRING) : Boolean;
   FUNCTION AppendVocab(WordStr, Vocab, Delim : STRING) : STRING;
-  FUNCTION EncryptMsg (Msg1, CurrVocab : STRING; EncryptNo1, EncryptNo2 : integer) : STRING;
-  FUNCTION DecryptMsg (Msg1, CurrVocab : STRING; DecryptNo1, DecryptNo2 : integer) : STRING;
+  FUNCTION RemoveVocab(WordStr, Vocab, Delim : STRING) : STRING;
   FUNCTION Reverse(S :STRING) : STRING;
   FUNCTION RemovePath(S :STRING) : STRING;
   FUNCTION RemoveUnixPath(S :STRING) : STRING;
@@ -236,44 +235,9 @@ BEGIN
   Result := WordStr + Delim + Vocab;
 END;
 
-FUNCTION EncryptMsg (Msg1, CurrVocab : STRING; EncryptNo1, EncryptNo2 : integer) : STRING;
-VAR
-  ResultStr: STRING;
-  Temp : char;
-  I, EncryptIndex: integer;
-
+FUNCTION RemoveVocab(WordStr, Vocab, Delim : STRING) : STRING;
 BEGIN
-  ResultStr := '';
-  Temp := ' ';
-  Msg1 := Msg1 + '_' + CurrVocab;
-  { Encrypt message routine }
-  FOR I := 1 TO length(Msg1) DO
-  BEGIN
-    Temp := Chr(Ord(Msg1[I]) XOR EncryptNo1 XOR EncryptNo2);
-    Temp := Chr(Ord(Temp) + EncryptNo2);
-    ResultStr := ResultStr + Temp;
-  END;
-  Result := ResultStr;
-end;
-
-FUNCTION DecryptMsg(Msg1, CurrVocab : STRING; DecryptNo1, DecryptNo2 : integer) : STRING;
-VAR
-  ResultStr, Vocab : STRING;
-  Temp, MarkEqChr : char;
-  I, EncryptIndex: integer;
-BEGIN
-  ResultStr := '';
-  Temp := ' ';
-  { Decrypt message routine }
-  FOR I := 1 TO length(Msg1) DO
-  BEGIN
-    Temp := Chr(Ord(Msg1[I]) - DecryptNo2);
-    Temp := Chr(Ord(Temp) XOR DecryptNo2 XOR DecryptNo1);
-    ResultStr := ResultStr + Temp;
-  END;
-  ResultStr := ParseStrNG(ResultStr,'_',0);
-  Vocab     := ParseStrNG(ResultStr,'_',1);
-  Result := ResultStr;
+  Result := ParseStrNG(WordStr,Delim,0);
 END;
 
 FUNCTION Reverse(S :STRING) : STRING;

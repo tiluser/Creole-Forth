@@ -331,7 +331,7 @@ BEGIN
   FOR I := 0 TO VS.Count-1 DO
   BEGIN
     SeeWord := AppendVocab(RawWord,VS[I],'.');
-    TestWord :=  DecryptMsg(SeeWord,VS[I],5,1);
+    TestWord :=  RemoveVocab(SeeWord,VS[I],',');
     LookupIndex := Dictionary.IndexOf(SeeWord);
     IF (LookupIndex <> -1) THEN GOTO Exit1;
   END;
