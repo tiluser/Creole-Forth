@@ -22,7 +22,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The views and conclusions contained in the software and documentation are those of the author and should not be 
 interpreted as representing official policies, either expressed or implied.
 *)
-unit creole;
+unit Creole;
 
 {$MODE Delphi}
 
@@ -31,7 +31,7 @@ interface
 uses
 //  LCLIntf,
   Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  coreprims, tilable, interpreter, compiler1, compiler2, crsysutils;
+  Coreprims, TILable, Interpreter, Compiler1, Compiler2, CrSysUtils;
 
 type
   TDictChgEvent = PROCEDURE(Sender : TObject) OF OBJECT;

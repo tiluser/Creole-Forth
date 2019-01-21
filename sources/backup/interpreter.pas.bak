@@ -31,8 +31,8 @@ unit interpreter;
 
 interface
 USES
-  Dialogs, SysUtils, Math, classes, stdctrls, tilable, coreprims,
-  crsysutils;
+  Dialogs, SysUtils, Math, classes, stdctrls, TILable, Coreprims,
+  CrSysUtils;
 
   PROCEDURE DoColon(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);
   PROCEDURE DoOuter(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);

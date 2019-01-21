@@ -31,7 +31,7 @@ unit coreprims;
 
 interface
 USES
-  Dialogs, SysUtils, Math, classes, stdctrls, crsysutils, tilable;
+  Dialogs, SysUtils, Math, classes, stdctrls, CrSysUtils, TILable;
   // Basic stack operators
   PROCEDURE DoNOP(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);
   PROCEDURE DoPlus(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);

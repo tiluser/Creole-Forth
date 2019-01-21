@@ -24,13 +24,13 @@ interpreted as representing official policies, either expressed or implied.
 *)
 
 
-unit TILable;
+unit tilable;
 
 {$MODE Delphi}
 
 interface
 USES
-  Dialogs, SysUtils, Math, classes, CrSysUtils;
+  Dialogs, SysUtils, Math, classes, crsysutils;
 TYPE
   ControlStructVal = (IFVal,ElseVal,ThenVal,JmpVal,StartDoVal,DoVal,LoopVal,
   BeginVal,UntilVal,LitVal,DotQVal1,DotQVal2,DoesVal,NOPVal,ExitVal,DoCompVal);

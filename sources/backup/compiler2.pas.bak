@@ -33,8 +33,8 @@ UNIT compiler2;
 
 INTERFACE
 USES
-  Dialogs, SysUtils, Math, classes, stdctrls, tilable, coreprims,
-  compiler1, interpreter, crsysutils;
+  Dialogs, SysUtils, Math, classes, stdctrls, TILable, Coreprims,
+  Compiler1, Interpreter, CrSysUtils;
 
 PROCEDURE CompileList(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);
 PROCEDURE CompileList2(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);

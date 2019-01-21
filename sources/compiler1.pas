@@ -22,14 +22,14 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The views and conclusions contained in the software and documentation are those of the author and should not be 
 interpreted as representing official policies, either expressed or implied.
 *)
-unit Compiler1;
+unit compiler1;
 
 {$MODE Delphi}
 
 interface
 USES
-  Dialogs, SysUtils, Math, classes, stdctrls, TILable, Coreprims,
-  Interpreter, CrSysUtils;
+  Dialogs, SysUtils, Math, classes, stdctrls, tilable, coreprims,
+  interpreter, crsysutils;
 
   // 1. Colon definition and dictionary manipulation.
   PROCEDURE DoCreate(Owner : TComponent; EI : TExtIntfce; DI : TDictIntfce; CI : TCtrlIntfce; CWI : TCreoleWord);
